@@ -1,7 +1,16 @@
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib/framework';
+import Vue from "vue";
+import Vuetify from "vuetify";
+import "vuetify/dist/vuetify.min.css";
 
 Vue.use(Vuetify);
 
 export default new Vuetify({
+  theme: {
+    themes: {
+      light: {
+        primary: "#6200EE",
+        accent: "#D1642C",
+      },
+    },
+  },
 });
