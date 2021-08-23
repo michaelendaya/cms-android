@@ -14,13 +14,18 @@ export default {
         },
     },
     mutations: {
-
         SET_USER(state, user) {
             state.user = user;
         },
         SET_TOKEN(state, auth_token) {
 
             state.token = auth_token;
+        },
+        CLEAR_TOKEN(state) {
+            state.token = null;
+        },
+        CLEAR_USER(state) {
+            state.user = null;
         },
     },
     actions: {
@@ -44,6 +49,10 @@ export default {
                 throw new Error(e);
             }
         },
+        signOut(context) {
+            context.commit("CLEAR_TOKEN");
+            context.commit("CLEAR_USER");
+        }
     },
 
 }
