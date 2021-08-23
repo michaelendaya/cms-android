@@ -1,0 +1,6 @@
+{
+  "appId": "com.aguayo.app",
+  "appName": "Aguayo Dental Clinic",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

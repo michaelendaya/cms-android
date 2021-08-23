@@ -1,25 +1,26 @@
 <template>
   <v-app>
     <v-main>
-      <router-view/>
+      <router-view />
     </v-main>
   </v-app>
 </template>
 
 <script>
-
 export default {
-  name: 'App',
+  name: "App",
 
-  data: () => ({
-    
-  }),
+  data: () => ({}),
 };
 </script>
 <style lang="scss">
-body{
+body {
   height: 100%;
-  overflow: hidden;
+  overflow-y: hidden !important;
   margin: 0;
+  padding-bottom: 0 !important;
+}
+.scroll-content {
+  padding-bottom: 0 !important;
 }
 </style>

@@ -4,6 +4,11 @@ import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
 
+
+/* Core CSS required for Ionic components to work properly */
+import '@ionic/vue/css/core.css';
+
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -1,165 +1,124 @@
 <template>
   <section>
-    <!-- <v-card elevation="12" class="login-card" width="80vw"> -->
-    <div class="loginform">
+    <div class="header text-center primary--text mt-15">
       <v-img
         class="mx-auto"
         :src="require('@/assets/login/logo.png')"
         max-height="140"
         max-width="140"
       />
-
-      <div class="text-center mb-10 mx-n5" v-show="step == 1">
-        <div class="mb-5 primary--text">What's your name?</div>
+      <h2>Sign Up</h2>
+    </div>
+    <div class="form mx-auto">
+      <!-- FORM STEP -->
+      <div v-if="step == 1">
         <v-text-field
           label="First Name"
-          rounded
           background-color="#ffff"
-          v-model="username"
           outlined
+          :error-messages="error"
           color="primary"
+          rounded
+          class="px-5"
         />
         <v-text-field
           label="Last Name"
           background-color="#ffff"
-          rounded
           outlined
+          :error-messages="error"
           color="primary"
+          rounded
+          class="px-5"
         />
-        <v-btn
-          color="primary"
-          class="mt-5"
-          @click="step = 2"
-          max-width="90vw"
-          block
-          rounded
-        >
-          Next
-        </v-btn>
+        <div class="px-7">
+          <v-btn block color="primary" class="mx-auto"  @click="moveStep">Next</v-btn>
+        </div>
       </div>
-      <div class="text-center mb-10 mx-n5" v-show="step == 2">
-        <div class="mb-5 primary--text">What's your address?</div>
 
-        <v-select
-          rounded
+      <div v-if="step == 2">
+        <v-text-field
+          label="Last Name"
           background-color="#ffff"
-          v-model="selectedProvince"
           outlined
-          :items="province"
-          required
-          label="Province"
-        ></v-select>
-        <v-select
-          rounded
-          background-color="#ffff"
-          v-model="selectedMunicipalities"
-          outlined
-          :items="municipalities"
-          label="Municipality"
-        >
-          <template slot="no-data"> Fill out municipality first </template>
-        </v-select>
-                  <v-text-field
-            label="Brgy, Street, Lot no."
-                rounded
-          background-color="#ffff"
-       outlined
-            required
-   
-            color="primary"
-            v-model="streetAddress"
-          />
-        <v-btn
+          :error-messages="error"
           color="primary"
-          class="mt-5 mx-5"
-          @click="step = 1"
-          max-width="90vw"
           rounded
+          class="px-5"
+        />
+        <v-text-field
+          :append-icon="showPass ? 'mdi-eye' : 'mdi-eye-off'"
+          :type="showPass ? 'text' : 'password'"
+          @click:append="showPass = !showPass"
+          label="Password"
+          background-color="#ffff"
           outlined
-          width="100"
-        >
-          Back
-        </v-btn>
-        <v-btn
+          :error-messages="error"
           color="primary"
-          class="mt-5 mx-5"
-          @click="step = 1"
-          max-width="90vw"
           rounded
-          width="100"
-        >
-          Next
-        </v-btn>
+          class="px-5"
+        />
+        <div class="px-5">
+          <v-btn block color="primary" class="mx-auto px-5" @click="moveStep"
+            >Next</v-btn
+          >
+        </div>
       </div>
     </div>
-    <div class="end">
+    <footer class="mt-16">
       <div class="login-label">
-        Already Have an Account?
-        <router-link to="/login" class="primary--text">Sign In</router-link>
+        Already have an account?
+        <router-link to="/signup" class="primary--text"
+          >Sign In instead</router-link
+        >
       </div>
-    </div>
+    </footer>
   </section>
 </template>
+
 <script>
-import { provinces } from "psgc";
 export default {
   data: () => ({
     step: 1,
-    province: [],
-    selectedProvince: "",
-    municipalities: [],
-    selectedMunicipalities: "",
-    streetAddress:""
   }),
-  watch: {
-    selectedProvince(v) {
-      this.municipalities = provinces.find(v).municipalities.map((a) => a.name);
+  methods: {
+    //Move step function 
+    moveStep() {
+      if (!(this.step == 2)) {
+          this.step += 1;
+        alert(this.step);
+      } else {
+        this.step = 1;
+      }
     },
-  },
-  mounted() {
-    this.province = provinces.all().map((a) => a.name);
   },
 };
 </script>
 
-<style lang="scss" scoped>
-//animation
 
-.slide-leave-active,
-.slide-enter-active {
-  transition: 1s;
-  border: 1px solid green;
-}
-.slide-enter {
-  transform: translate(100%, 0);
-}
-.slide-leave-to {
-  transform: translate(-100%, 0);
-}
+<style lang="scss" scoped>
 section {
   height: 100vh;
-
+  min-height: 650px;
+  overflow: hidden;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #6300ee49),
     url("~@/assets/login/BG.jpg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
-  .loginform {
-    width: 80%;
-    position: absolute;
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  background-size: 950px 812px;
+  display: flex;
+  flex-direction: column;
+
+  .form {
+    transform: translateY(20px);
+    flex-grow: 1;
+    vertical-align: middle;
+    width: 100%;
   }
-  .end {
+  footer {
     width: 100%;
     text-align: center;
-    position: absolute;
-    bottom: 0%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     .login-label {
-      margin-bottom: 5px;
+      font-weight: 500;
       a:hover {
         text-decoration: underline;
         cursor: pointer;
@@ -170,5 +129,4 @@ section {
     }
   }
 }
-//}
 </style>
