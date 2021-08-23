@@ -57,6 +57,7 @@
 
 <script>
 import { Toast } from "@capacitor/toast";
+import { App } from "@capacitor/app";
 export default {
   data: () => ({
     user: {
@@ -68,11 +69,27 @@ export default {
   methods: {
     async submit() {
       alert(console.log("User"));
-
+      this.login();
       await Toast.show({
         text: `Hello! ${this.user.email}`,
       });
     },
+
+    async login() {
+      const data = this.user
+      try {
+        await this.$store.dispatch("authentication/singIn", data);
+        alert("SUCCESS")
+      } catch (error) {
+        console.log(error.message);
+        this.error = error.message;
+      }
+    },
+  },
+  mounted() {
+    App.addListener("backButton", () => {
+      alert("Thou shall not back");
+    });
   },
 };
 </script>
