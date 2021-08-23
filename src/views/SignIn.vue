@@ -13,7 +13,7 @@
       <v-text-field
         label="Email"
         background-color="#ffff"
-        v-model="username"
+        v-model="user.email"
         outlined
         :error-messages="error"
         color="primary"
@@ -26,7 +26,7 @@
         @click:append="showPass = !showPass"
         label="Password"
         background-color="#ffff"
-        v-model="username"
+        v-model="user.password"
         outlined
         :error-messages="error"
         color="primary"
@@ -34,7 +34,9 @@
         class="px-5"
       />
       <div class="px-7">
-        <v-btn block color="primary" class="mx-auto ">Submit</v-btn>
+        <v-btn block color="primary" class="mx-auto" @click="submit"
+          >Submit</v-btn
+        >
       </div>
     </div>
 
@@ -54,7 +56,25 @@
 </template>
 
 <script>
-export default {};
+import { Toast } from "@capacitor/toast";
+export default {
+  data: () => ({
+    user: {
+      email: "",
+      password: "",
+    },
+    showPass: false,
+  }),
+  methods: {
+    async submit() {
+      alert(console.log("User"));
+
+      await Toast.show({
+        text: `Hello! ${this.user.email}`,
+      });
+    },
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -69,21 +89,18 @@ section {
   background-size: 950px 812px;
   display: flex;
   flex-direction: column;
-
 }
 .header {
-
 }
 .form {
   transform: translateY(20px);
-  flex-grow: 1; 
+  flex-grow: 1;
 
   vertical-align: middle;
   width: 100%;
 }
 
 footer {
-
   width: 100%;
   text-align: center;
   .login-label {
