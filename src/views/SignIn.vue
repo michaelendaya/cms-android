@@ -49,7 +49,7 @@
       </div>
       <div class="login-label">
         Don't have an account yet?
-        <router-link to="/signup" class="primary--text">Sign Up!</router-link>
+        <router-link to="/sign-up" class="primary--text">Sign Up!</router-link>
       </div>
     </footer>
   </section>
