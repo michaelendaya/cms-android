@@ -29,7 +29,7 @@
               label="Email"
               background-color="#ffff"
               :rules="[rules.required, rules.email]"
-              v-model="email"
+              v-model="user.email"
               outlined
               :error-messages="error"
               color="primary"
@@ -44,7 +44,7 @@
               :type="showPass1 ? 'text' : 'password'"
               required
               @click:append="showPass1 = !showPass1"
-              v-model="pass"
+              v-model="user.pass"
               outlined
               :error-messages="error"
               color="primary"
@@ -77,7 +77,7 @@
               outlined
               :rules="[rules.required]"
               :error-messages="error"
-              v-model="firstname"
+              v-model="user.firstname"
               color="primary"
               rounded
               class="px-5 mt-2"
@@ -88,7 +88,7 @@
               outlined
               :rules="[rules.required]"
               :error-messages="error"
-              v-model="lastname"
+              v-model="user.lastname"
               color="primary"
               rounded
               class="px-5"
@@ -99,7 +99,7 @@
               outlined
               :rules="[rules.required]"
               :error-messages="error"
-              v-model="middlename"
+              v-model="user.middlename"
               color="primary"
               rounded
               class="px-5"
@@ -109,98 +109,98 @@
 
         <v-window-item :value="3">
           <v-form ref="form3">
-          <v-select
-            background-color="#ffff"
-            color="primary"
-            class="px-5 mt-2"
-            rounded
-            :rules="[rules.required]"
-            v-model="selectedProvince"
-            outlined
-            :items="province"
-            required
-            label="Province"
-          ></v-select>
-          <v-select
-            background-color="#ffff"
-            color="primary"
-            class="px-5"
-            rounded
-            :rules="[rules.required]"
-            v-model="selectedMunicipalities"
-            outlined
-            :items="municipalities"
-            label="Municipality"
-          >
-            <template slot="no-data"> Fill out municipality first </template>
-          </v-select>
-          <v-text-field
-            label="Brgy, Street, Lot no."
-            background-color="#ffff"
-            :rules="[rules.required]"
-            v-model="address"
-            outlined
-            :error-messages="error"
-            color="primary"
-            rounded
-            class="px-5"
-          />
+            <v-select
+              background-color="#ffff"
+              color="primary"
+              class="px-5 mt-2"
+              rounded
+              :rules="[rules.required]"
+              v-model="user.selectedProvince"
+              outlined
+              :items="province"
+              required
+              label="Province"
+            ></v-select>
+            <v-select
+              background-color="#ffff"
+              color="primary"
+              class="px-5"
+              rounded
+              :rules="[rules.required]"
+              v-model="user.selectedMunicipalities"
+              outlined
+              :items="municipalities"
+              label="Municipality"
+            >
+              <template slot="no-data"> Fill out municipality first </template>
+            </v-select>
+            <v-text-field
+              label="Brgy, Street, Lot no."
+              background-color="#ffff"
+              :rules="[rules.required]"
+              v-model="user.address"
+              outlined
+              :error-messages="error"
+              color="primary"
+              rounded
+              class="px-5"
+            />
           </v-form>
         </v-window-item>
 
         <v-window-item :value="4">
           <v-form ref="form4">
-          <v-text-field
-            label="Phone number"
-            background-color="#ffff"
-            outlined
-            :rules="[rules.required, rules.phone]"
-            :error-messages="error"
-            v-model="phoneNumber"
-            color="primary"
-            rounded
-            class="px-5 mt-2"
-          />
-          <v-select
-            v-model="gender"
-            :rules="[rules.required]"
-            :error-messages="error"
-            :items="genderList"
-            label="Gender"
-            color="primary"
-            rounded
-            class="px-5"
-            background-color="#ffff"
-            outlined
-          ></v-select>
-          <v-menu
-            v-model="showBday"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                outlined
-                :rules="[rules.required]"
-                rounded
-                class="px-5"
-                background-color="#ffff"
-                v-model="bday"
-                label="Birthdate"
-                append-icon="mdi-calendar"
-                readonly
-                v-bind="attrs"
-                v-on="on"
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              v-model="bday"
-              @input="showBday = false"
-            ></v-date-picker>
-          </v-menu>
+            <v-text-field
+              label="Phone number"
+              background-color="#ffff"
+              outlined
+              :rules="[rules.required, rules.phone]"
+              :error-messages="error"
+              v-model="user.phoneNumber"
+              color="primary"
+              rounded
+              class="px-5 mt-2"
+            />
+            <v-select
+              v-model="user.gender"
+              :rules="[rules.required]"
+              :error-messages="error"
+              :items="genderList"
+              label="Gender"
+              color="primary"
+              rounded
+              class="px-5"
+              background-color="#ffff"
+              outlined
+            ></v-select>
+            <v-menu
+              v-model="user.showBday"
+              :close-on-content-click="false"
+              :nudge-right="40"
+              transition="scale-transition"
+              offset-y
+              min-width="auto"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  outlined
+                  :rules="[rules.required]"
+                  rounded
+                  class="px-5"
+                  background-color="#ffff"
+                  v-model="user.bday"
+                  label="Birthdate"
+                  append-icon="mdi-calendar"
+                  readonly
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                v-model="user.bday"
+                @input="showBday = false"
+              ></v-date-picker>
+            </v-menu>
           </v-form>
         </v-window-item>
 
@@ -243,31 +243,33 @@ export default {
     return {
       step: 1,
       showBday: false,
-      firstname: "",
-      lastname: "",
-      middlename: "",
-      address: "",
+      user: {
+        firstname: "",
+        lastname: "",
+        middlename: "",
+        address: "",
+        selectedProvince: "",
+        selectedMunicipalities: "",
+        email: "",
+        pass: "",
+        phoneNumber: null,
+        gender: null,
+        bday: null,
+      },
       province: [],
-      selectedProvince: "",
       municipalities: [],
-      selectedMunicipalities: "",
-      email: "",
-      phoneNumber: null, 
       cpass: "",
-      pass: "",
-      gender: null,
-      bday: null,
       showPass1: false,
       showPass2: false,
       genderList: ["male", "female"],
       rules: {
         required: (value) => !!value || "Required.",
         min: (v) => v.length >= 8 || "Min 8 characters",
-        passMatch: (v) => v === this.pass || "The password you entered don't match",
+        passMatch: (v) =>
+          v === this.pass || "The password you entered don't match",
 
         email: (value) => {
-          const pattern =
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || "Invalid e-mail.";
         },
         phone: (value) => {
@@ -314,23 +316,23 @@ export default {
       } else if (!this.$refs.form4.validate()) {
         this.step = 4;
       } else {
-        this.signUp()
+        this.signUp();
       }
     },
     signUp() {
       const data = {
-        first_name: this.firstname,
-        middle_name: this.middlename,
-        last_name: this.lastname,
-        birth_date: this.bday,
-        gender: this.gender,
-        home_address: `${this.selectedProvince}, ${this.selectedMunicipalities} , ${this.address}`,
-        contact_number: this.phoneNumber,
+        first_name: this.user.firstname,
+        middle_name: this.user.middlename,
+        last_name: this.user.lastname,
+        birth_date: this.user.bday,
+        gender: this.user.gender,
+        home_address: `${this.user.selectedProvince}, ${this.user.selectedMunicipalities} , ${this.user.address}`,
+        contact_number: this.user.phoneNumber,
         email: this.email,
         password: this.pass,
       };
       console.log(data);
-    }
+    },
   },
   mounted() {
     this.province = provinces.all().map((a) => a.name);
