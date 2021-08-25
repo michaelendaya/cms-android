@@ -32,6 +32,7 @@
         color="primary"
         rounded
         class="px-5"
+        @keydown.enter="login"
       />
       <div class="px-7">
         <v-btn block color="primary" class="mx-auto" @click="submit"
