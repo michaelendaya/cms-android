@@ -115,7 +115,7 @@
               class="px-5 mt-2"
               rounded
               :rules="[rules.required]"
-              v-model="user.selectedProvince"
+              v-model="selectedProvince"
               outlined
               :items="province"
               required
@@ -127,7 +127,7 @@
               class="px-5"
               rounded
               :rules="[rules.required]"
-              v-model="user.selectedMunicipalities"
+              v-model="selectedMunicipalities"
               outlined
               :items="municipalities"
               label="Municipality"
@@ -178,7 +178,6 @@
               :close-on-content-click="false"
               :nudge-right="40"
               transition="scale-transition"
-              offset-y
               min-width="auto"
             >
               <template v-slot:activator="{ on, attrs }">
@@ -248,14 +247,14 @@ export default {
         lastname: "",
         middlename: "",
         address: "",
-        selectedProvince: "",
-        selectedMunicipalities: "",
         email: "",
         pass: "",
         phoneNumber: null,
         gender: null,
         bday: null,
       },
+      selectedProvince: "",
+      selectedMunicipalities: "",
       province: [],
       municipalities: [],
       cpass: "",
@@ -266,10 +265,11 @@ export default {
         required: (value) => !!value || "Required.",
         min: (v) => v.length >= 8 || "Min 8 characters",
         passMatch: (v) =>
-          v === this.pass || "The password you entered don't match",
+          v === this.user.pass || "The password you entered don't match",
 
         email: (value) => {
-          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          const pattern =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || "Invalid e-mail.";
         },
         phone: (value) => {
@@ -286,6 +286,7 @@ export default {
 
   watch: {
     selectedProvince(v) {
+      console.log("A");
       this.municipalities = provinces.find(v).municipalities.map((a) => a.name);
     },
   },
@@ -319,19 +320,28 @@ export default {
         this.signUp();
       }
     },
-    signUp() {
+    async signUp() {
       const data = {
         first_name: this.user.firstname,
         middle_name: this.user.middlename,
         last_name: this.user.lastname,
         birth_date: this.user.bday,
         gender: this.user.gender,
-        home_address: `${this.user.selectedProvince}, ${this.user.selectedMunicipalities} , ${this.user.address}`,
+        home_address: `${this.selectedProvince}, ${this.selectedMunicipalities} , ${this.user.address}`,
         contact_number: this.user.phoneNumber,
-        email: this.email,
-        password: this.pass,
+        email: this.user.email,
+        password: this.user.pass,
       };
       console.log(data);
+      try {
+        let x = await this.$store.dispatch("authentication/signUp", data);
+        if (x == "success") {
+          this.$router.push("/");
+        }
+      } catch (error) {
+        this.error = error.message;
+        this.step = 1;
+      }
     },
   },
   mounted() {

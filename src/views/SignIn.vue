@@ -53,6 +53,18 @@
         <router-link to="/sign-up" class="primary--text">Sign Up!</router-link>
       </div>
     </footer>
+    <v-dialog v-model="spinner" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Signing In...
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
@@ -66,7 +78,8 @@ export default {
       password: "",
     },
     showPass: false,
-    error:null,
+    spinner: false,
+    error: null,
   }),
   methods: {
     async submit() {
@@ -78,10 +91,13 @@ export default {
 
     async login() {
       try {
-      await this.$store.dispatch("authentication/singIn", this.user);
-       this.$router.push({ name: "Home" });
-      
+        this.spinner = true;
+        await this.$store.dispatch("authentication/singIn", this.user);
+
+        this.spinner = false;
+        this.$router.push({ name: "Home" });
       } catch (error) {
+        this.spinner = false;
         console.log(error.message);
         this.error = error.message;
       }

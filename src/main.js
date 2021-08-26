@@ -8,7 +8,7 @@ import axios from "axios"
 
 Vue.config.productionTip = false
 Vue.prototype.$http = axios.create({
-  baseURL:'http://localhost:8000/api'
+  baseURL:'https://cmsaguayo-backend.herokuapp.com/api'
 });
 new Vue({
   router,

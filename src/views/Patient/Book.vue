@@ -7,9 +7,8 @@
             <v-menu
               v-model="showDate"
               :close-on-content-click="false"
-              :nudge-right="40"
+              :nudge-right="-20"
               transition="scale-transition"
-              offset-y
               min-width="auto"
             >
               <template v-slot:activator="{ on, attrs }">
@@ -35,9 +34,8 @@
             <v-menu
               v-model="showTime"
               :close-on-content-click="false"
-              :nudge-right="40"
+              :nudge-right="-20"
               transition="scale-transition"
-              offset-y
               min-width="auto"
             >
               <template v-slot:activator="{ on }">
@@ -179,42 +177,42 @@ export default {
       {
         type: "Consultation",
         price: "350",
-        img: require('@/assets/services/consult.jpg'),
+        img: require("@/assets/services/consult.jpg"),
       },
       {
         type: "Oral Prophylaxis",
         price: "950",
-        img: require('@/assets/services/oral-prophylaxis.png'),
+        img: require("@/assets/services/oral-prophylaxis.png"),
       },
       {
         type: "Restorative Procedure",
         price: "950",
-        img: require('@/assets/services/restorative-procedure.jpg'),
+        img: require("@/assets/services/restorative-procedure.jpg"),
       },
       {
         type: "Prosthetics",
         price: "2000",
-        img: require('@/assets/services/prosthetics.jpg'),
+        img: require("@/assets/services/prosthetics.jpg"),
       },
       {
         type: "Orthodontics",
         price: "7000-75000",
-        img: require('@/assets/services/orthodontics.jpg'),
+        img: require("@/assets/services/orthodontics.jpg"),
       },
       {
         type: "Extraction/Surgery",
         price: "950",
-        img: require('@/assets/services/extraction.jpg'),
+        img: require("@/assets/services/extraction.jpg"),
       },
       {
         type: "Topical Flouride Application/Sealant",
         price: "950 - 1500",
-        img: require('@/assets/services/topical.jpg'),
+        img: require("@/assets/services/topical.jpg"),
       },
       {
         type: "Cosmetic Procedure",
         price: "4000 - 20000",
-        img: require('@/assets/services/cosmetic.jpg'),
+        img: require("@/assets/services/cosmetic.jpg"),
       },
     ],
   }),
@@ -243,18 +241,17 @@ export default {
 
       console.log(data);
 
-      // try {
-      //   await this.$store.dispatch("patient/bookAppointment", data);
-      //   this.$router.push({ name: "My Appointment" });
-      // } catch (error) {
-      //   console.log(error);
-      // }
+      try {
+        await this.$store.dispatch("patient/bookAppointment", data);
+        this.$router.push({ name: "Appointment" });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 };
 </script>
 <style lang="scss" scoped>
-
 .rules {
   max-height: 300px;
   overflow-y: scroll;

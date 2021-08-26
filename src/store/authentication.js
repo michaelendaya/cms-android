@@ -49,6 +49,26 @@ export default {
                 throw new Error(e);
             }
         },
+        async signUp(context, payload) {
+            try {
+                let data = await this._vm.$http.post("signup", payload);
+                // context.commit("SET_TOKEN", data.data.token);
+                // context.commit("SET_USER", data.data.user);
+                console.log(data)
+                return "success";
+            } catch (error) {
+                console.log(error.response.status);
+                let e;
+                if (error.response.status == 401) {
+                    e = "Invalid User Credentials";
+                } else if (error.response.status == 400) {
+                    e = "No Such User";
+                } else {
+                    e = "Internal Service Error";
+                }
+                throw new Error(e);
+            }
+        },
         signOut(context) {
             context.commit("CLEAR_TOKEN");
             context.commit("CLEAR_USER");

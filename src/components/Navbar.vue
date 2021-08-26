@@ -1,11 +1,8 @@
 <template>
   <section>
-    <v-system-bar color="primary"></v-system-bar>
-    <v-app-bar color="primary" dark prominent>
+    <v-app-bar color="primary" dark   app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-
       <v-toolbar-title>{{ $route.name }}</v-toolbar-title>
-
       <v-spacer></v-spacer>
     </v-app-bar>
 
@@ -58,17 +55,15 @@
             </v-list-item-icon>
             <v-list-item-title>My Account</v-list-item-title>
           </v-list-item>
+          <v-list-item link color="primary" @click="logout">
+            <v-list-item-icon>
+              <v-icon color="primary">mdi-logout</v-icon>
+            </v-list-item-icon>
+            <v-list-item-title>Logout</v-list-item-title>
+          </v-list-item>
+          
         </v-list-item-group>
       </v-list>
-
-      <template v-slot:append>
-        <v-list-item link color="primary" @click="logout">
-          <v-list-item-icon>
-            <v-icon color="primary">mdi-logout</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>Logout</v-list-item-title>
-        </v-list-item>
-      </template>
     </v-navigation-drawer>
   </section>
 </template>
