@@ -93,7 +93,6 @@ export default {
       try {
         this.spinner = true;
         await this.$store.dispatch("authentication/singIn", this.user);
-
         this.spinner = false;
         this.$router.push({ name: "Home" });
       } catch (error) {

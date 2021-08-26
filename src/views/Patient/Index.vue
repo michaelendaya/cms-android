@@ -1,7 +1,7 @@
 <template>
   <section>
     <navbar></navbar>
-    <router-view       id="scrolling-techniques-2"></router-view>
+    <router-view></router-view>
   </section>
 </template>
 <script>
