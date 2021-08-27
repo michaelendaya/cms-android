@@ -135,7 +135,7 @@
               </v-col>
               <v-col cols="12" sm="6">
                 <v-select
-                :item-value="selectedMunicipalities"
+                  :item-value="selectedMunicipalities"
                   :rules="[rules.required]"
                   :readonly="readOnly1"
                   v-model="selectedMunicipalities"
@@ -274,13 +274,14 @@ export default {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || "Invalid e-mail.";
         },
-        
 
-        phone:(value)=>{
-          const pattern =/^(09|\+639)\d{9}$/;
-          return pattern.test(value)|| "Phone number should be 09xxxxxxxxx or +639xxxxxxxxx"
-
-        }
+        phone: (value) => {
+          const pattern = /^(09|\+639)\d{9}$/;
+          return (
+            pattern.test(value) ||
+            "Phone number should be 09xxxxxxxxx or +639xxxxxxxxx"
+          );
+        },
       },
       error: null,
     };
@@ -330,6 +331,7 @@ export default {
       if (photo) {
         data.append("photo", this.selectedFile, this.selectedFile.name);
       }
+      console.log(data)
       try {
         let x = await this.$store.dispatch("authentication/editProfile", data);
         console.log(x);
@@ -355,25 +357,31 @@ export default {
       this.municipalities = provinces.find(v).municipalities.map((a) => a.name);
     },
   },
+  computed: {
+    user() {
+      return this.$store.getters["authentication/user"];
+    },
+  },
   created() {
     // let user = JSON.parse(localStorage.getItem("user"));
-    // this.firstname = user.first_name;
-    // this.lastname = user.last_name;
-    // this.middlename = user.middle_name;
-    // this.photo = user.photo;
-    // this.email = user.email;
-    // this.address = user.home_address;
+    this.firstname = this.user.first_name;
+    this.lastname = this.user.last_name;
+    this.middlename = this.user.middle_name;
+    this.photo = this.user.photo;
+    this.email = this.user.email;
+    this.address = this.user.home_address;
+    this.phoneNumber = this.user.contact_number;
+    this.province = provinces.all().map((a) => a.name);
+    let address = this.user.home_address.split(",");
 
-    // this.phoneNumber = user.contact_number;
-    // this.province = provinces.all().map((a) => a.name);
-    // let address = user.home_address.split(",");
-    // console.log(address)
-    // this.selectedProvince = address[ address.length - 1];
-    //  this.municipalities = provinces.find(this.selectedProvince).municipalities.map((a) => a.name);
-    // this.selectedMunicipalities = address[address.length - 2].trim();
-    // address.splice(address.length - 2,2)
-    // console.log(address)
-    // this.address = address
+    this.selectedProvince = address[address.length - 1];
+    this.municipalities = provinces
+      .find(this.selectedProvince)
+      .municipalities.map((a) => a.name);
+    this.selectedMunicipalities = address[address.length - 2].trim();
+    address.splice(address.length - 2, 2);
+    console.log(address);
+    this.address = address;
   },
 };
 </script>

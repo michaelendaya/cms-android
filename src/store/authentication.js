@@ -60,11 +60,27 @@ export default {
                 let e;
                 console.log(error);
                 if (error.response.data.error.includes("E11000")) {
-                  e = "Account Already Exists";
+                    e = "Account Already Exists";
                 } else {
-                  e = "Internal Service Error";
+                    e = "Internal Service Error";
                 }
                 throw new Error(e);
+            }
+        },
+        async editProfile(context, payload) {
+            const headers = context.rootGetters["authentication/headers"];
+            try {
+                const data = await this._vm.$http.put(
+                    "user", //link or path
+                    payload, //data
+                    { headers } //token
+                );
+
+                context.commit("SET_USER", data.data.user);
+                return "success";
+            } catch (error) {
+                console.log(error);
+                throw new Error(error);
             }
         },
         signOut(context) {
