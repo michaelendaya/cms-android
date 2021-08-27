@@ -107,6 +107,9 @@ export default {
       alert("Thou shall not back");
     });
   },
+  destroyed() {
+    App.removeAllListeners();
+  },
 };
 </script>
 

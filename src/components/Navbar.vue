@@ -6,7 +6,7 @@
       <v-spacer></v-spacer>
     </v-app-bar>
 
-    <v-navigation-drawer v-model="drawer" absolute temporary>
+    <v-navigation-drawer v-model="drawer" fixed temporary>
       <v-list-item class="px-2">
         <v-list-item-avatar>
           <v-avatar

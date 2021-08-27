@@ -52,8 +52,8 @@ export default {
         async signUp(context, payload) {
             try {
                 let data = await this._vm.$http.post("signup", payload);
-                context.commit("SET_TOKEN", data.token);
-                context.commit("SET_USER", data.user);
+                context.commit("SET_TOKEN", data.data.token);
+                context.commit("SET_USER", data.data.user);
                 console.log(data)
                 return "success";
             } catch (error) {

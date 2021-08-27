@@ -227,21 +227,33 @@
     <footer class="mt-16">
       <div class="login-label">
         Already have an account?
-        <router-link to="/signup" class="primary--text"
-          >Sign In instead</router-link
-        >
+        <router-link to="/" class="primary--text">Sign In instead</router-link>
       </div>
     </footer>
+    <v-dialog v-model="spinner" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Signing In...
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
 <script>
+import { App } from "@capacitor/app";
 import { provinces } from "psgc";
 export default {
   data() {
     return {
       step: 1,
       showBday: false,
+      spinner: false,
       user: {
         firstname: "",
         lastname: "",
@@ -334,11 +346,14 @@ export default {
       };
       console.log(data);
       try {
+        this.spinner = true;
         let x = await this.$store.dispatch("authentication/signUp", data);
+        this.spinner = false;
         if (x == "success") {
-          this.$router.push("/");
+          this.$router.push({ name: "Home" });
         }
       } catch (error) {
+        this.spinner = false;
         this.error = error.message;
         this.step = 1;
       }
@@ -346,6 +361,12 @@ export default {
   },
   mounted() {
     this.province = provinces.all().map((a) => a.name);
+    App.addListener("backButton", () => {
+        this.$router.back()
+    });
+  },
+  destroyed() {
+    App.removeAllListeners();
   },
 };
 </script>
