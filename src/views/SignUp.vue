@@ -46,7 +46,7 @@
               @click:append="showPass1 = !showPass1"
               v-model="user.pass"
               outlined
-              :error-messages="error"
+       
               color="primary"
               rounded
               class="px-5"
@@ -61,7 +61,7 @@
               @click:append="showPass2 = !showPass2"
               v-model="cpass"
               outlined
-              :error-messages="error"
+
               color="primary"
               rounded
               class="px-5"
@@ -76,7 +76,7 @@
               background-color="#ffff"
               outlined
               :rules="[rules.required]"
-              :error-messages="error"
+
               v-model="user.firstname"
               color="primary"
               rounded
@@ -87,7 +87,7 @@
               background-color="#ffff"
               outlined
               :rules="[rules.required]"
-              :error-messages="error"
+      
               v-model="user.lastname"
               color="primary"
               rounded
@@ -98,7 +98,7 @@
               background-color="#ffff"
               outlined
               :rules="[rules.required]"
-              :error-messages="error"
+      
               v-model="user.middlename"
               color="primary"
               rounded
@@ -140,7 +140,7 @@
               :rules="[rules.required]"
               v-model="user.address"
               outlined
-              :error-messages="error"
+     
               color="primary"
               rounded
               class="px-5"
@@ -155,7 +155,7 @@
               background-color="#ffff"
               outlined
               :rules="[rules.required, rules.phone]"
-              :error-messages="error"
+   
               v-model="user.phoneNumber"
               color="primary"
               rounded
@@ -164,7 +164,7 @@
             <v-select
               v-model="user.gender"
               :rules="[rules.required]"
-              :error-messages="error"
+ 
               :items="genderList"
               label="Gender"
               color="primary"

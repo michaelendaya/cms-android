@@ -57,14 +57,12 @@ export default {
                 console.log(data)
                 return "success";
             } catch (error) {
-                console.log(error.response.status);
                 let e;
-                if (error.response.status == 401) {
-                    e = "Invalid User Credentials";
-                } else if (error.response.status == 400) {
-                    e = "No Such User";
+                console.log(error);
+                if (error.response.data.error.includes("E11000")) {
+                  e = "Account Already Exists";
                 } else {
-                    e = "Internal Service Error";
+                  e = "Internal Service Error";
                 }
                 throw new Error(e);
             }
