@@ -202,21 +202,12 @@
             </v-menu>
           </v-form>
         </v-window-item>
-
-        <v-window-item :value="5">
-          <div class="pa-4 text-center">
-            <h3 class="text-h4 font-weight-bold mb-2">
-              Welcome to Aguayo Dental Clinic
-            </h3>
-            <span class="text-caption black--text">Thanks for signing up!</span>
-          </div>
-        </v-window-item>
       </v-window>
 
       <v-card-actions class="mx-5">
         <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="primary" depressed @click="step++" v-if="step < 5">
+        <v-btn color="primary" depressed @click="step++" v-if="step < 4">
           Next
         </v-btn>
 
@@ -311,10 +302,8 @@ export default {
           return "Full name";
         case 3:
           return "Address";
-        case 4:
-          return "Basic Info";
         default:
-          return "Account created";
+          return "Basic Info";
       }
     },
   },

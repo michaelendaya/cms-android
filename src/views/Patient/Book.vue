@@ -123,7 +123,7 @@
       <div class="service-list d-flex flex-wrap ml-n2">
         <v-card
           max-width="300"
-          class="ma-5"
+          class="mx-auto my-2"
           v-for="service in services"
           :key="service.type"
         >
