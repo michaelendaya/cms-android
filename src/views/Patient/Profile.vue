@@ -8,23 +8,14 @@
         >
           <v-avatar
             color="primary"
-            class="white--text"
+            class="white--text mx-auto"
             size="100"
-            @click="chooseFiles()"
+            @click="sheet = true"
           >
             {{ firstname.substring(0, 1) + lastname.substring(0, 1) }}
             <div class="thumb">
-              <v-btn
-                :class="{ 'show-btns': hover }"
-                :color="transparent"
-                icon
-                large
-              >
-                <v-icon
-                  :class="{ 'show-btns': hover }"
-                  :color="transparent"
-                  large
-                >
+              <v-btn :class="{ 'show-btns': hover }" icon large>
+                <v-icon :class="{ 'show-btns': hover }" large>
                   mdi-image
                 </v-icon>
               </v-btn>
@@ -37,21 +28,12 @@
             aspect-ratio="1"
             max-height="100"
             max-width="100"
-            class="rounded-circle icon"
-            @click="chooseFiles()"
+            class="rounded-circle mx-auto"
+            @click="sheet = true"
           >
             <div class="thumb">
-              <v-btn
-                :class="{ 'show-btns': hover }"
-                :color="transparent"
-                icon
-                large
-              >
-                <v-icon
-                  :class="{ 'show-btns': hover }"
-                  :color="transparent"
-                  large
-                >
+              <v-btn :class="{ 'show-btns': hover }" icon large>
+                <v-icon :class="{ 'show-btns': hover }" large>
                   mdi-image
                 </v-icon>
               </v-btn>
@@ -60,10 +42,18 @@
         </v-hover>
 
         <input
-          id="fileUpload"
           type="file"
-          hidden
+          id="fileUpload"
           accept="image/*"
+          hidden
+          @change="onFileSelected"
+        />
+        <input
+          type="file"
+          id="takePhoto"
+          accept="image/*"
+          hidden
+          capture
           @change="onFileSelected"
         />
       </v-card-title>
@@ -270,6 +260,49 @@
         </v-btn>
       </div>
     </div>
+    <!-- buttom sheet -->
+    <v-bottom-sheet v-model="sheet">
+      <v-list>
+        <!-- <v-list-item v-for="tile in 5" :key="tile.title" @click="sheet = false">
+          <v-list-item-avatar>
+            {{ tile }}
+          </v-list-item-avatar> -->
+        <v-list-item
+          @click="
+            sheet = false;
+            chooseFiles();
+          "
+        >
+          <v-list-item-avatar>
+            <v-icon>mdi-upload</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-title>Upload Photo</v-list-item-title>
+        </v-list-item>
+        <v-list-item
+          @click="
+            sheet = false;
+            takePhoto();
+          "
+        >
+          <v-list-item-avatar>
+            <v-icon>mdi-camera</v-icon>
+          </v-list-item-avatar>
+          <v-list-item-title>Take Photo</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-bottom-sheet>
+    <v-dialog v-model="spinner" hide-overlay persistent width="300">
+      <v-card color="primary" dark>
+        <v-card-text>
+          Updating Profile
+          <v-progress-linear
+            indeterminate
+            color="white"
+            class="mb-0"
+          ></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </section>
 </template>
 
@@ -278,6 +311,8 @@ import { provinces } from "psgc";
 export default {
   data() {
     return {
+      spinner: false,
+      sheet: false,
       selectedFile: null,
       fileName: "",
       image: "",
@@ -338,6 +373,11 @@ export default {
     },
     chooseFiles() {
       document.getElementById("fileUpload").click();
+      console.log("a");
+    },
+    takePhoto() {
+      document.getElementById("takePhoto").click();
+      console.log("ab");
     },
     onFileSelected(event) {
       this.selectedFile = event.target.files[0];
@@ -367,8 +407,8 @@ export default {
       }
       console.log(data);
       try {
-        let x = await this.$store.dispatch("authentication/editProfile", data);
-        console.log(x);
+        this.spinner = true;
+        await this.$store.dispatch("authentication/editProfile", data);
         this.$router.push("/");
       } catch (error) {
         console.log(error.message);
@@ -407,7 +447,7 @@ export default {
     this.phoneNumber = this.user.contact_number;
     this.province = provinces.all().map((a) => a.name);
     let address = this.user.home_address.split(",");
-
+    console.log(address)
     this.selectedProvince = address[address.length - 1];
     this.municipalities = provinces
       .find(this.selectedProvince)
@@ -421,15 +461,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.icon {
-  margin-left: auto;
-  margin-right: auto;
-}
-
 .border {
   border-bottom-style: groove;
-  margin-top: 20px;
-  margin-bottom: 50px;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 .show-btns {
   color: #fff !important;
