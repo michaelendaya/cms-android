@@ -397,7 +397,7 @@ export default {
       data.append("last_name", this.lastname);
       data.append(
         "home_address",
-        `${this.address},${this.selectedMunicipalities},${this.selectedProvince}`
+        `${this.address}, ${this.selectedMunicipalities}, ${this.selectedProvince}`
       );
       data.append("contact_number", this.phoneNumber);
       data.append("email", this.email);

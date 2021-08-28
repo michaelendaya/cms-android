@@ -328,7 +328,7 @@ export default {
         last_name: this.user.lastname,
         birth_date: this.user.bday,
         gender: this.user.gender,
-        home_address: `${this.selectedProvince}, ${this.selectedMunicipalities} , ${this.user.address}`,
+        home_address: `${this.user.address}, ${this.selectedMunicipalities}, ${this.selectedProvince}`,
         contact_number: this.user.phoneNumber,
         email: this.user.email,
         password: this.user.pass,
