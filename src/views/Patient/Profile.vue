@@ -2,8 +2,6 @@
   <section class="mb-13 mt-10 mx-auto">
     <div class="px-3">
       <v-card-title>
-        Edit My Account
-        <v-spacer></v-spacer>
         <v-hover
           v-if="photo.trim().length == 0 && selectedFile == null"
           v-slot="{ hover }"
@@ -11,7 +9,7 @@
           <v-avatar
             color="primary"
             class="white--text"
-            size="80"
+            size="100"
             @click="chooseFiles()"
           >
             {{ firstname.substring(0, 1) + lastname.substring(0, 1) }}
@@ -37,9 +35,9 @@
           <v-img
             :src="photo"
             aspect-ratio="1"
-            max-height="80"
-            max-width="80"
-            class="rounded-circle"
+            max-height="100"
+            max-width="100"
+            class="rounded-circle icon"
             @click="chooseFiles()"
           >
             <div class="thumb">
@@ -70,103 +68,135 @@
         />
       </v-card-title>
 
-      <div class="text-center px-5">
+      <div class="px-5">
         <v-form ref="form1">
           <div class="border">
             <v-row>
-              <v-col cols="12" sm="4">
-                <v-text-field
-                  required
-                  :rules="[rules.required]"
-                  label="Firstname"
-                  outlined
-                  color="primary"
-                  :append-outer-icon="
-                    readOnly == true ? 'mdi-pencil' : 'mdi-pencil-off'
-                  "
-                  @click:append-outer="editBro(0)"
-                  :readonly="readOnly"
-                  v-model="firstname"
-                />
+              <v-col cols="10">
+                Full Name
               </v-col>
-              <v-col cols="12" sm="4">
-                <v-text-field
-                  required
-                  :rules="[rules.required]"
-                  label="Lastname"
-                  outlined
-                  color="primary"
-                  :readonly="readOnly"
-                  v-model="lastname"
-                />
-              </v-col>
-              <v-col cols="12" sm="4">
-                <v-text-field
-                  required
-                  :rules="[rules.required]"
-                  label="Middle Name"
-                  outlined
-                  color="primary"
-                  :readonly="readOnly"
-                  v-model="middlename"
-                />
+              <v-col cols="2">
+                <v-btn icon @click="editBro(0)">
+                  <v-icon>{{
+                    readOnly == true ? "mdi-pencil" : "mdi-pencil-off"
+                  }}</v-icon>
+                </v-btn>
               </v-col>
             </v-row>
           </div>
+
+          <v-row>
+            <v-col cols="12" sm="4">
+              <v-text-field
+                required
+                :rules="[rules.required]"
+                label="Firstname"
+                outlined
+                color="primary"
+                :readonly="readOnly"
+                v-model="firstname"
+              />
+            </v-col>
+            <v-col cols="12" sm="4">
+              <v-text-field
+                required
+                :rules="[rules.required]"
+                label="Lastname"
+                outlined
+                color="primary"
+                :readonly="readOnly"
+                v-model="lastname"
+              />
+            </v-col>
+            <v-col cols="12" sm="4">
+              <v-text-field
+                required
+                :rules="[rules.required]"
+                label="Middle Name"
+                outlined
+                color="primary"
+                :readonly="readOnly"
+                v-model="middlename"
+              />
+            </v-col>
+          </v-row>
         </v-form>
 
         <v-form ref="form2">
           <div class="border">
             <v-row>
-              <v-col cols="12" sm="6">
-                <v-select
-                  :rules="[rules.required]"
-                  v-model="selectedProvince"
-                  outlined
-                  :items="province"
-                  :append-outer-icon="
-                    readOnly1 == true ? 'mdi-pencil' : 'mdi-pencil-off'
-                  "
-                  @click:append-outer="editBro(1)"
-                  :readonly="readOnly1"
-                  required
-                  label="Province"
-                ></v-select>
+              <v-col cols="10">
+                Address
               </v-col>
-              <v-col cols="12" sm="6">
-                <v-select
-                  :item-value="selectedMunicipalities"
-                  :rules="[rules.required]"
-                  :readonly="readOnly1"
-                  v-model="selectedMunicipalities"
-                  outlined
-                  :items="municipalities"
-                  label="Municipality"
-                >
-                  <template slot="no-data">
-                    Fill out municipality first
-                  </template>
-                </v-select>
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col cols="12" sm="12">
-                <v-text-field
-                  label="Brgy, Street, Lot no."
-                  outlined
-                  required
-                  :rules="[rules.required]"
-                  color="primary"
-                  v-model="address"
-                  :readonly="readOnly1"
-                />
+              <v-col cols="2">
+                <v-btn icon @click="editBro(1)">
+                  <v-icon>{{
+                    readOnly1 == true ? "mdi-pencil" : "mdi-pencil-off"
+                  }}</v-icon>
+                </v-btn>
               </v-col>
             </v-row>
           </div>
+
+          <v-row>
+            <v-col cols="12" sm="6">
+              <v-select
+                :rules="[rules.required]"
+                v-model="selectedProvince"
+                outlined
+                :items="province"
+                :readonly="readOnly1"
+                required
+                label="Province"
+              ></v-select>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-select
+                :item-value="selectedMunicipalities"
+                :rules="[rules.required]"
+                :readonly="readOnly1"
+                v-model="selectedMunicipalities"
+                outlined
+                :items="municipalities"
+                label="Municipality"
+              >
+                <template slot="no-data">
+                  Fill out municipality first
+                </template>
+              </v-select>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols="12" sm="12">
+              <v-text-field
+                label="Brgy, Street, Lot no."
+                outlined
+                required
+                :rules="[rules.required]"
+                color="primary"
+                v-model="address"
+                :readonly="readOnly1"
+              />
+            </v-col>
+          </v-row>
         </v-form>
 
         <v-form ref="form3">
           <div class="border">
+            <v-row>
+              <v-col cols="10">
+                Phone Number
+              </v-col>
+              <v-col cols="2">
+                <v-btn icon @click="editBro(2)">
+                  <v-icon>{{
+                    readOnly2 == true ? "mdi-pencil" : "mdi-pencil-off"
+                  }}</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </div>
+
             <v-text-field
               label="Phone number"
               :rules="[rules.required, rules.phone]"
@@ -174,17 +204,26 @@
               outlined
               color="primary"
               v-model="phoneNumber"
-              :append-outer-icon="
-                readOnly2 == true ? 'mdi-pencil' : 'mdi-pencil-off'
-              "
-              @click:append-outer="editBro(2)"
               :readonly="readOnly2"
             />
-          </div>
         </v-form>
 
         <v-form ref="form4">
           <div class="border">
+            <v-row>
+              <v-col cols="10">
+                Password
+              </v-col>
+              <v-col cols="2">
+                <v-btn icon @click="editBro(3)">
+                  <v-icon>{{
+                    readOnly3 == true ? "mdi-pencil" : "mdi-pencil-off"
+                  }}</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </div>
+
             <v-row>
               <v-col class="d-flex" cols="12" sm="6">
                 <v-text-field
@@ -197,10 +236,6 @@
                   label="Password"
                   outlined
                   color="primary"
-                  :append-outer-icon="
-                    readOnly3 == true ? 'mdi-pencil' : 'mdi-pencil-off'
-                  "
-                  @click:append-outer="editBro(3)"
                   :readonly="readOnly3"
                 />
               </v-col>
@@ -219,7 +254,7 @@
                 />
               </v-col>
             </v-row>
-          </div>
+
         </v-form>
 
         <v-btn
@@ -270,8 +305,7 @@ export default {
         passMatch: () =>
           this.pass === this.cpass || `The password you entered don't match`,
         email: (value) => {
-          const pattern =
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
           return pattern.test(value) || "Invalid e-mail.";
         },
 
@@ -331,7 +365,7 @@ export default {
       if (photo) {
         data.append("photo", this.selectedFile, this.selectedFile.name);
       }
-      console.log(data)
+      console.log(data);
       try {
         let x = await this.$store.dispatch("authentication/editProfile", data);
         console.log(x);
@@ -387,9 +421,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.icon {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .border {
   border-bottom-style: groove;
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-bottom: 50px;
 }
 .show-btns {
   color: #fff !important;
