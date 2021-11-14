@@ -25,6 +25,7 @@
                 ></v-text-field>
               </template>
               <v-date-picker
+                :min="today"
                 v-model="date"
                 @input="showDate = false"
               ></v-date-picker>
@@ -74,6 +75,7 @@
             <template v-slot:activator="{ on, attrs }">
               <v-col cols="6" sm="6"
                 ><v-btn color="primary" class="mt-2" v-bind="attrs" v-on="on"
+                :disabled="!verified"
                   >Submit</v-btn
                 ></v-col
               >
@@ -216,6 +218,14 @@ export default {
       },
     ],
   }),
+  computed: {
+    today() {
+      return moment().toISOString();
+    },
+    verified() {
+      return this.$store.getters["authentication/user"].verified;
+    },
+  },
   methods: {
     validate() {
       if (this.$refs.form.validate()) {

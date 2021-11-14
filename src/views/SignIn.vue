@@ -1,5 +1,6 @@
 <template>
-  <div class="background">
+  <div>
+    <div class="background"></div>
     <section>
       <div class="header text-center primary--text mt-15">
         <v-img
@@ -120,24 +121,22 @@ export default {
 <style lang="scss" scoped>
 section {
   height: 100vh;
-  min-height: 667px;
+  min-height: 500px;
   overflow: hidden;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #6300ee49),
-    url("~@/assets/login/BG.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 950px 823px;
+  z-index: 2;
   display: flex;
   flex-direction: column;
 }
 .background {
-    min-height: 823px;
-  overflow: hidden;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #6300ee49),
+    min-height: 860px;
+width: 100%;
+  z-index: -2px;
+  position: absolute;
+background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #6300ee49),
     url("~@/assets/login/BG.jpg");
   background-repeat: no-repeat;
-  background-position: center;
-  background-size: 950px 823px;
+  background-position: 50% 0;
+  background-size: 970px 822px;
 }
 .form {
   transform: translateY(20px);
@@ -148,6 +147,7 @@ section {
 }
 
 footer {
+  z-index: 2;
   width: 100%;
   text-align: center;
   .login-label {
@@ -160,5 +160,7 @@ footer {
       text-decoration: none;
     }
   }
+}
+@media only screen and (max-width: 375px) {
 }
 </style>

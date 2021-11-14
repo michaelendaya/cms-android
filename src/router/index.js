@@ -64,6 +64,14 @@ const routes = [
    
       },
       {
+        path: "verify",
+        component: function () {
+          return import(/* webpackChunkName: "about" */ '../views/Patient/Verify.vue')
+        },
+        name: "Verify",
+   
+      },
+      {
         path: "profile",
         component: function () {
           return import(/* webpackChunkName: "about" */ '../views/Patient/Profile.vue')

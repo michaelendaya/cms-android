@@ -1,243 +1,245 @@
 <template>
-  <section>
-    <div class="header text-center primary--text mt-15">
-      <v-img
-        class="mx-auto"
-        :src="require('@/assets/login/logo.png')"
-        max-height="140"
-        max-width="140"
-      />
-    </div>
-
-    <div class="form mx-auto">
-      <!-- FORM STEP -->
-
-      <v-card-title class="text-h6 font-weight-regular justify-space-between">
-        <span>{{ currentTitle }}</span>
-        <v-avatar
-          color="primary lighten-2"
-          class="subheading white--text"
-          size="24"
-          v-text="step"
-        ></v-avatar>
-      </v-card-title>
-
-      <v-window v-model="step">
-        <v-window-item :value="1">
-          <v-form ref="form1">
-            <v-text-field
-              label="Email"
-              background-color="#ffff"
-              :rules="[rules.required, rules.email]"
-              v-model="user.email"
-              outlined
-              :error-messages="error"
-              color="primary"
-              rounded
-              class="px-5 mt-2"
-            />
-            <v-text-field
-              label="Password"
-              background-color="#ffff"
-              :rules="[rules.required, rules.min]"
-              :append-icon="showPass1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="showPass1 ? 'text' : 'password'"
-              required
-              @click:append="showPass1 = !showPass1"
-              v-model="user.pass"
-              outlined
-       
-              color="primary"
-              rounded
-              class="px-5"
-            />
-            <v-text-field
-              label="Confirm Password"
-              background-color="#ffff"
-              required
-              :rules="[rules.required, rules.passMatch]"
-              :append-icon="showPass2 ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="showPass2 ? 'text' : 'password'"
-              @click:append="showPass2 = !showPass2"
-              v-model="cpass"
-              outlined
-
-              color="primary"
-              rounded
-              class="px-5"
-            />
-          </v-form>
-        </v-window-item>
-
-        <v-window-item :value="2">
-          <v-form ref="form2">
-            <v-text-field
-              label="First Name"
-              background-color="#ffff"
-              outlined
-              :rules="[rules.required]"
-
-              v-model="user.firstname"
-              color="primary"
-              rounded
-              class="px-5 mt-2"
-            />
-            <v-text-field
-              label="Last Name"
-              background-color="#ffff"
-              outlined
-              :rules="[rules.required]"
-      
-              v-model="user.lastname"
-              color="primary"
-              rounded
-              class="px-5"
-            />
-            <v-text-field
-              label="Middle Name"
-              background-color="#ffff"
-              outlined
-              :rules="[rules.required]"
-      
-              v-model="user.middlename"
-              color="primary"
-              rounded
-              class="px-5"
-            />
-          </v-form>
-        </v-window-item>
-
-        <v-window-item :value="3">
-          <v-form ref="form3">
-            <v-select
-              background-color="#ffff"
-              color="primary"
-              class="px-5 mt-2"
-              rounded
-              :rules="[rules.required]"
-              v-model="selectedProvince"
-              outlined
-              :items="province"
-              required
-              label="Province"
-            ></v-select>
-            <v-select
-              background-color="#ffff"
-              color="primary"
-              class="px-5"
-              rounded
-              :rules="[rules.required]"
-              v-model="selectedMunicipalities"
-              outlined
-              :items="municipalities"
-              label="Municipality"
-            >
-              <template slot="no-data"> Fill out municipality first </template>
-            </v-select>
-            <v-text-field
-              label="Brgy, Street, Lot no."
-              background-color="#ffff"
-              :rules="[rules.required]"
-              v-model="user.address"
-              outlined
-     
-              color="primary"
-              rounded
-              class="px-5"
-            />
-          </v-form>
-        </v-window-item>
-
-        <v-window-item :value="4">
-          <v-form ref="form4">
-            <v-text-field
-              label="Phone number"
-              background-color="#ffff"
-              outlined
-              :rules="[rules.required, rules.phone]"
-   
-              v-model="user.phoneNumber"
-              color="primary"
-              rounded
-              class="px-5 mt-2"
-            />
-            <v-select
-              v-model="user.gender"
-              :rules="[rules.required]"
- 
-              :items="genderList"
-              label="Gender"
-              color="primary"
-              rounded
-              class="px-5"
-              background-color="#ffff"
-              outlined
-            ></v-select>
-            <v-menu
-              v-model="user.showBday"
-              :close-on-content-click="false"
-              :nudge-right="40"
-              transition="scale-transition"
-              min-width="auto"
-            >
-              <template v-slot:activator="{ on, attrs }">
-                <v-text-field
-                  outlined
-                  :rules="[rules.required]"
-                  rounded
-                  class="px-5"
-                  background-color="#ffff"
-                  v-model="user.bday"
-                  label="Birthdate"
-                  append-icon="mdi-calendar"
-                  readonly
-                  v-bind="attrs"
-                  v-on="on"
-                ></v-text-field>
-              </template>
-              <v-date-picker
-                v-model="user.bday"
-                @input="showBday = false"
-              ></v-date-picker>
-            </v-menu>
-          </v-form>
-        </v-window-item>
-      </v-window>
-
-      <v-card-actions class="mx-5">
-        <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" depressed @click="step++" v-if="step < 4">
-          Next
-        </v-btn>
-
-        <v-btn color="primary" depressed @click="submit" v-else> Submit </v-btn>
-      </v-card-actions>
-    </div>
-
-    <footer class="mt-16">
-      <div class="login-label">
-        Already have an account?
-        <router-link to="/" class="primary--text">Sign In instead</router-link>
+  <div>
+    <div class="background"></div>
+    <section>
+      <div class="header text-center primary--text mt-15">
+        <v-img
+          class="mx-auto"
+          :src="require('@/assets/login/logo.png')"
+          max-height="140"
+          max-width="140"
+        />
       </div>
-    </footer>
-    <v-dialog v-model="spinner" hide-overlay persistent width="300">
-      <v-card color="primary" dark>
-        <v-card-text>
-          Signing In...
-          <v-progress-linear
-            indeterminate
-            color="white"
-            class="mb-0"
-          ></v-progress-linear>
-        </v-card-text>
-      </v-card>
-    </v-dialog>
-  </section>
+
+      <div class="form mx-auto">
+        <!-- FORM STEP -->
+
+        <v-card-title class="text-h6 font-weight-regular justify-space-between">
+          <span>{{ currentTitle }}</span>
+          <v-avatar
+            color="primary lighten-2"
+            class="subheading white--text"
+            size="24"
+            v-text="step"
+          ></v-avatar>
+        </v-card-title>
+
+        <v-window v-model="step">
+          <v-window-item :value="1">
+            <v-form ref="form1">
+              <v-text-field
+                label="Email"
+                background-color="#ffff"
+                :rules="[rules.required, rules.email]"
+                v-model="user.email"
+                outlined
+                :error-messages="error"
+                color="primary"
+                rounded
+                class="px-5 mt-2"
+              />
+              <v-text-field
+                label="Password"
+                background-color="#ffff"
+                :rules="[rules.required, rules.min]"
+                :append-icon="showPass1 ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPass1 ? 'text' : 'password'"
+                required
+                @click:append="showPass1 = !showPass1"
+                v-model="user.pass"
+                outlined
+                color="primary"
+                rounded
+                class="px-5"
+              />
+              <v-text-field
+                label="Confirm Password"
+                background-color="#ffff"
+                required
+                :rules="[rules.required, rules.passMatch]"
+                :append-icon="showPass2 ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPass2 ? 'text' : 'password'"
+                @click:append="showPass2 = !showPass2"
+                v-model="cpass"
+                outlined
+                color="primary"
+                rounded
+                class="px-5"
+              />
+            </v-form>
+          </v-window-item>
+
+          <v-window-item :value="2">
+            <v-form ref="form2">
+              <v-text-field
+                label="First Name"
+                background-color="#ffff"
+                outlined
+                :rules="[rules.required]"
+                v-model="user.firstname"
+                color="primary"
+                rounded
+                class="px-5 mt-2"
+              />
+              <v-text-field
+                label="Last Name"
+                background-color="#ffff"
+                outlined
+                :rules="[rules.required]"
+                v-model="user.lastname"
+                color="primary"
+                rounded
+                class="px-5"
+              />
+              <v-text-field
+                label="Middle Name"
+                background-color="#ffff"
+                outlined
+                v-model="user.middlename"
+                color="primary"
+                rounded
+                class="px-5"
+              />
+            </v-form>
+          </v-window-item>
+
+          <v-window-item :value="3">
+            <v-form ref="form3">
+              <v-select
+                background-color="#ffff"
+                color="primary"
+                class="px-5 mt-2"
+                rounded
+                :rules="[rules.required]"
+                v-model="selectedProvince"
+                outlined
+                :items="province"
+                required
+                label="Province"
+              ></v-select>
+              <v-select
+                background-color="#ffff"
+                color="primary"
+                class="px-5"
+                rounded
+                :rules="[rules.required]"
+                v-model="selectedMunicipalities"
+                outlined
+                :items="municipalities"
+                label="Municipality"
+              >
+                <template slot="no-data">
+                  Fill out municipality first
+                </template>
+              </v-select>
+              <v-text-field
+                label="Brgy, Street, Lot no."
+                background-color="#ffff"
+                :rules="[rules.required]"
+                v-model="user.address"
+                outlined
+                color="primary"
+                rounded
+                class="px-5"
+              />
+            </v-form>
+          </v-window-item>
+
+          <v-window-item :value="4">
+            <v-form ref="form4">
+              <v-text-field
+                label="Phone number"
+                background-color="#ffff"
+                outlined
+                :rules="[rules.required, rules.phone]"
+                v-model="user.phoneNumber"
+                color="primary"
+                rounded
+                class="px-5 mt-2"
+              />
+              <v-select
+                v-model="user.gender"
+                :rules="[rules.required]"
+                :items="genderList"
+                label="Gender"
+                color="primary"
+                rounded
+                class="px-5"
+                background-color="#ffff"
+                outlined
+              ></v-select>
+              <v-menu
+                v-model="user.showBday"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                transition="scale-transition"
+                min-width="auto"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    outlined
+                    :rules="[rules.required]"
+                    rounded
+                    class="px-5"
+                    background-color="#ffff"
+                    v-model="user.bday"
+                    label="Birthdate"
+                    append-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  :max="today"
+                  v-model="user.bday"
+                  @input="showBday = false"
+                ></v-date-picker>
+              </v-menu>
+            </v-form>
+          </v-window-item>
+        </v-window>
+
+        <v-card-actions class="mx-5">
+          <v-btn :disabled="step === 1" text @click="step--"> Back </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" depressed @click="step++" v-if="step < 4">
+            Next
+          </v-btn>
+
+          <v-btn color="primary" depressed @click="submit" v-else>
+            Submit
+          </v-btn>
+        </v-card-actions>
+      </div>
+
+      <footer class="mt-16">
+        <div class="login-label">
+          Already have an account?
+          <router-link to="/" class="primary--text"
+            >Sign In instead</router-link
+          >
+        </div>
+      </footer>
+      <v-dialog v-model="spinner" hide-overlay persistent width="300">
+        <v-card color="primary" dark>
+          <v-card-text>
+            Signing In...
+            <v-progress-linear
+              indeterminate
+              color="white"
+              class="mb-0"
+            ></v-progress-linear>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </section>
+  </div>
 </template>
 
 <script>
 import { App } from "@capacitor/app";
+import moment from "moment";
 import { provinces } from "psgc";
 export default {
   data() {
@@ -306,6 +308,9 @@ export default {
           return "Basic Info";
       }
     },
+    today() {
+      return moment().toISOString();
+    },
   },
   methods: {
     submit() {
@@ -351,7 +356,7 @@ export default {
   mounted() {
     this.province = provinces.all().map((a) => a.name);
     App.addListener("backButton", () => {
-        this.$router.back()
+      this.$router.back();
     });
   },
   destroyed() {
@@ -365,11 +370,7 @@ section {
   height: 100vh;
   min-height: 650px;
   overflow: hidden;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #6300ee49),
-    url("~@/assets/login/BG.jpg");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 950px 812px;
+
   display: flex;
   flex-direction: column;
 
@@ -380,6 +381,7 @@ section {
     width: 100%;
   }
   footer {
+      z-index: 2;
     width: 100%;
     text-align: center;
     .login-label {
@@ -393,5 +395,16 @@ section {
       }
     }
   }
+}
+.background {
+  min-height: 880px;
+  width: 100%;
+  z-index: -2px;
+  position: absolute;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0), #6300ee49),
+    url("~@/assets/login/BG.jpg");
+  background-repeat: no-repeat;
+  background-position: 50% 0;
+  background-size: 970px 822px;
 }
 </style>
